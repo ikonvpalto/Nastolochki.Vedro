@@ -1,20 +1,9 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
-<!--    <style name="Theme.NastolochkiVedro" parent="Theme.MaterialComponents.Light.DarkActionBar">-->
-<!--        &lt;!&ndash; Primary brand color. &ndash;&gt;-->
-<!--        <item name="colorPrimary">@color/purple_500_deprecated</item>-->
-<!--        <item name="colorPrimaryVariant">@color/purple_700_deprecated</item>-->
-<!--        <item name="colorOnPrimary">@color/white_deprecated</item>-->
-<!--        &lt;!&ndash; Secondary brand color. &ndash;&gt;-->
-<!--        <item name="colorSecondary">@color/teal_200_deprecated</item>-->
-<!--        <item name="colorSecondaryVariant">@color/teal_700_deprecated</item>-->
-<!--        <item name="colorOnSecondary">@color/black_deprecated</item>-->
-<!--        &lt;!&ndash; Status bar color. &ndash;&gt;-->
-<!--        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>-->
-<!--        &lt;!&ndash; Customize your theme here. &ndash;&gt;-->
-<!--    </style>-->
 
     <style name="Theme.NastolochkiVedro" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+
+        <item name="fontFamily">Roboto</item>
+        <item name="android:fontFamily">Roboto</item>
 
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
@@ -33,7 +22,6 @@
 
         <item name="color">@color/black</item>
         <item name="android:text">@color/black</item>
-        <item name="android:colorButtonNormal">@color/black</item>
         <item name="android:colorControlNormal">@color/black</item>
 
         <item name="backgroundColor">@color/white</item>
@@ -43,6 +31,8 @@
     <style name="Text">
         <item name="android:textColor">@color/black</item>
         <item name="android:textColorSecondary">@color/black</item>
+        <item name="fontFamily">Roboto</item>
+        <item name="android:fontFamily">Roboto</item>
     </style>
 
 </resources>

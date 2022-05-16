@@ -25,15 +25,56 @@
             app:layout_constraintTop_toTopOf="parent"
             app:title="@string/upcoming_events"/>
 
-        <TextView
-            android:layout_width="wrap_content"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/events"
-            android:textColor="?attr/color"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.067"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/events_toolbar" />
+            app:layout_constraintTop_toBottomOf="@+id/events_toolbar"
+            android:layout_marginHorizontal="17dp"
+            android:layout_marginVertical="24dp">
+
+            <TextView
+                android:id="@+id/current_month"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/stub_month"
+                android:textColor="?attr/color"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:textSize="18sp"
+                android:theme="@style/Text"/>
+
+            <ImageButton
+                android:id="@+id/open_date_picker"
+                android:layout_width="24sp"
+                android:layout_height="24sp"
+                android:background="@android:color/transparent"
+                android:drawableTint="?attr/color"
+                android:src="@drawable/icon_calendar"
+                android:textColor="?attr/color"
+                android:tint="?attr/color"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.05"
+                app:layout_constraintStart_toEndOf="@id/current_month"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+
+            <com.michalsvec.singlerowcalendar.calendar.SingleRowCalendar
+                android:id="@+id/events_single_row_calendar"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:layout_marginTop="8dp"
+                app:deselection="false"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/current_month"
+                app:longPress="false"
+                app:multiSelection="false"/>
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

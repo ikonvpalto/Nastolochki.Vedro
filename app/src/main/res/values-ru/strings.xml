@@ -4,4 +4,5 @@
     <string name="upcoming_events">Предстоящие события</string>
     <string name="events">События</string>
     <string name="new_event">Новое событие</string>
+    <string name="stub_month">Май</string>
 </resources>
