@@ -2,7 +2,6 @@ package org.kvpbldsck.nastolochki.vedro.activities
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -13,14 +12,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        setupToolbar()
         setupNavigation()
-    }
-
-    private fun setupToolbar() {
-        val toolbar = getToolbar()
-
-        setSupportActionBar(toolbar)
     }
 
     private fun setupNavigation() {
@@ -32,6 +24,4 @@ class MainActivity : AppCompatActivity() {
 
         bottomNav.setupWithNavController(navController)
     }
-
-    private fun getToolbar(): Toolbar = findViewById(R.id.toolbar)
 }
