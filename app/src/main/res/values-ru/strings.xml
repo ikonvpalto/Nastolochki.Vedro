@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Настолочки</string>
+    <string name="upcoming_events">Предстоящие события</string>
+    <string name="events">События</string>
+    <string name="new_event">Новое событие</string>
+</resources>
