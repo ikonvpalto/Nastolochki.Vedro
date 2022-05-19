@@ -53,13 +53,11 @@
                 android:drawableTint="?attr/color"
                 android:src="@drawable/icon_calendar"
                 android:textColor="?attr/color"
-                android:tint="?attr/color"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.05"
                 app:layout_constraintStart_toEndOf="@id/current_month"
-                app:layout_constraintTop_toTopOf="parent" />
-
-
+                app:layout_constraintTop_toTopOf="parent"
+                android:contentDescription="@string/open_calendar" />
 
             <com.michalsvec.singlerowcalendar.calendar.SingleRowCalendar
                 android:id="@+id/events_single_row_calendar"
@@ -71,7 +69,8 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/current_month"
                 app:longPress="false"
-                app:multiSelection="false"/>
+                app:multiSelection="false"
+                android:contentDescription="@string/calendar"/>
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

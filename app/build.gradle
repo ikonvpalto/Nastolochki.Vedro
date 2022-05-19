@@ -7,6 +7,7 @@ android {
     compileSdk 31
 
     defaultConfig {
+        resConfigs "ru"
         applicationId "org.kvpbldsck.nastolochki.vedro"
         minSdk 26
         targetSdk 31

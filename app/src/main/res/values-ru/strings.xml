@@ -5,4 +5,6 @@
     <string name="events">События</string>
     <string name="new_event">Новое событие</string>
     <string name="stub_month">Май</string>
+    <string name="open_calendar">Открыть каледарь</string>
+    <string name="calendar">Календарь</string>
 </resources>

@@ -4,5 +4,6 @@
     <string name="events">Events</string>
     <string name="new_event">New event</string>
     <string name="stub_month">May</string>
-    <string name="empty" />
+    <string name="open_calendar">Open calendar</string>
+    <string name="calendar">Calendar</string>
 </resources>
