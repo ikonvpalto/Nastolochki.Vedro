@@ -1,9 +1,0 @@
-<resources>
-    <string name="app_name">Nastolochki</string>
-    <string name="upcoming_events">Upcoming events</string>
-    <string name="events">Events</string>
-    <string name="new_event">New event</string>
-    <string name="stub_month">May</string>
-    <string name="open_calendar">Open calendar</string>
-    <string name="calendar">Calendar</string>
-</resources>
