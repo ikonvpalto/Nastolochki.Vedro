@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Настолочки</string>
+    <string name="events">События</string>
+    <string name="open_calendar">Открыть календарь</string>
+    <string name="voting">Проходит опрос</string>
+    <string name="participant">Участник</string>
+    <string name="participants">Участники</string>
+    <string name="convenient_time">Мне удобно придти</string>
+    <string name="vote">Проголосовать</string>
+    <string name="retract_vote">Отозвать голос</string>
+</resources>
