@@ -2,6 +2,7 @@ buildscript {
     ext {
         compose_version = '1.1.1'
         kotlin_version = '1.6.10'
+        compose_datetime_version = '0.8.0-beta'
     }
 }// Top-level build file where you can add configuration options common to all sub-projects/modules.
 plugins {
@@ -12,4 +13,10 @@ plugins {
 
 task clean(type: Delete) {
     delete rootProject.buildDir
+}
+
+tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
+    kotlinOptions {
+        freeCompilerArgs += "-opt-in=kotlin.RequiresOptIn"
+    }
 }

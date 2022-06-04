@@ -15,16 +15,17 @@ import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import org.kvpbldsck.nastolochki.vedro.R
-import org.kvpbldsck.nastolochki.vedro.ui.screens.events.models.EventModel
+import org.kvpbldsck.nastolochki.vedro.models.EventModel
 import org.kvpbldsck.nastolochki.vedro.ui.screens.events.models.getTestEventsViewState
 import org.kvpbldsck.nastolochki.vedro.ui.theme.NastolochkiVedroTheme
 import org.kvpbldsck.nastolochki.vedro.ui.views.Avatar
+import org.kvpbldsck.nastolochki.vedro.ui.views.IconWithText
 import org.kvpbldsck.nastolochki.vedro.utils.DateFormats
 import java.time.LocalDateTime
 
 @OptIn(ExperimentalMaterialApi::class, ExperimentalFoundationApi::class)
 @Composable
-fun EventCardView(
+fun EventVotingCardView(
     event: EventModel,
     onDateToggled: (LocalDateTime, Boolean) -> Unit,
     onVoted: (Boolean) -> Unit,
@@ -43,10 +44,7 @@ fun EventCardView(
 
             Spacer(Modifier.height(10.dp))
 
-            Row {
-                Icon(painter = painterResource(id = R.drawable.icon_map_marker), contentDescription = "", tint = MaterialTheme.colors.primary)
-                Text(text = event.address)
-            }
+            IconWithText(icon = painterResource(id = R.drawable.icon_map_marker), text = event.address)
 
             Spacer(Modifier.height(10.dp))
 
@@ -96,9 +94,9 @@ fun EventCardView(
 
 @Preview(showBackground = true)
 @Composable
-fun EventCardView_Preview() {
+fun EventVotingCardView_Preview() {
     NastolochkiVedroTheme {
-        EventCardView(
+        EventVotingCardView(
             getTestEventsViewState().events.first(),
             { _, _ -> },
             {},

@@ -8,16 +8,19 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import kotlinx.coroutines.launch
 import org.kvpbldsck.nastolochki.vedro.ui.theme.NastolochkiVedroTheme
 import org.kvpbldsck.nastolochki.vedro.ui.theme.SingleLineCalendarItemShape
 import org.kvpbldsck.nastolochki.vedro.ui.theme.SingleLineCalendarTextStyle
 import org.kvpbldsck.nastolochki.vedro.utils.*
 import java.time.LocalDate
+import java.time.Month
 
 @Composable
 fun SingleLineCalendar(
@@ -27,8 +30,15 @@ fun SingleLineCalendar(
     onMonthChanged: (String) -> Unit
 ) {
 
-    val dates = (-30L..60L)
-        .map { daysToAdd -> LocalDate.now().plusDays(daysToAdd)}
+    val uiScope = rememberCoroutineScope()
+
+    val year = LocalDate.now().year
+    val yearStart = LocalDate.of(year, Month.JANUARY, 1)
+    val yearEnd = LocalDate.of(year, Month.DECEMBER, 31)
+    val totalDays = yearEnd.dayOfYear - yearStart.dayOfYear
+
+    val dates = (0L..totalDays)
+        .map { daysToAdd -> yearStart.plusDays(daysToAdd)}
         .toList()
 
     val calendarItemModifier = Modifier
@@ -41,6 +51,7 @@ fun SingleLineCalendar(
         .padding(0.dp)
 
     val listState = rememberLazyListState()
+
     val month = listState.layoutInfo.visibleItemsInfo
             .map { dates[it.index].getCapitalizeMonthName() }
             .groupBy { it }
@@ -84,8 +95,12 @@ fun SingleLineCalendar(
     }
 
     LaunchedEffect(listState) {
-        val index = dates.indexOfFirst { it == selectedDate }
-        listState.scrollToItem(index - 1)
+        val visibleDates = listState.layoutInfo.visibleItemsInfo
+            .map { dates[it.index] }
+        if (!visibleDates.contains(selectedDate) ) {
+            val index = dates.indexOfFirst { it == selectedDate }
+            uiScope.launch { listState.scrollToItem(index - 1) }
+        }
     }
 }
 
@@ -93,6 +108,6 @@ fun SingleLineCalendar(
 @Composable
 fun SingleLineCalendar_Preview() {
     NastolochkiVedroTheme {
-        SingleLineCalendar(selectedDate = LocalDate.now(), "", {}, {})
+        SingleLineCalendar(LocalDate.now(), "", {}, {})
     }
 }

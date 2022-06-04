@@ -3,7 +3,7 @@ package org.kvpbldsck.nastolochki.vedro.ui.screens.events
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import org.kvpbldsck.nastolochki.vedro.ui.screens.events.models.EventModel
+import org.kvpbldsck.nastolochki.vedro.models.EventModel
 import org.kvpbldsck.nastolochki.vedro.ui.screens.events.models.EventsViewState
 import org.kvpbldsck.nastolochki.vedro.ui.screens.events.models.getTestEventsViewState
 import org.kvpbldsck.nastolochki.vedro.utils.capitalize
