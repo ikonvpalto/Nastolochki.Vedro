@@ -5,10 +5,9 @@ import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import org.kvpbldsck.nastolochki.vedro.R
 import org.kvpbldsck.nastolochki.vedro.ui.screens.events.views.EventsPageView
+import org.kvpbldsck.nastolochki.vedro.ui.screens.events.views.EventsTopBar
 import org.kvpbldsck.nastolochki.vedro.ui.theme.NastolochkiVedroTheme
 
 @Composable
@@ -29,13 +28,6 @@ fun EventsScreen(
             onDateToggled = eventsViewModel::onDateToggled,
             onVoted = eventsViewModel::onVoteToggle,
             modifier = Modifier.padding(padding)) }
-    )
-}
-
-@Composable
-private fun EventsTopBar() {
-    TopAppBar(
-        title = { Text(stringResource(id = R.string.events)) },
     )
 }
 
