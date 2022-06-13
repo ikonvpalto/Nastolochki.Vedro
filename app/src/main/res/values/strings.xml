@@ -16,4 +16,22 @@
     <string name="new_event">Новое событие</string>
     <string name="chats">Чаты</string>
     <string name="profile">Профиль</string>
+    <string name="on_exact_time">На точное время</string>
+    <string name="with_voting">С опросом</string>
+    <string name="title">Название</string>
+    <string name="description">Описание</string>
+    <string name="place">Место</string>
+    <string name="remove_participant">Удалить участника</string>
+    <string name="select">Выбрать</string>
+    <string name="to_select_date">Выбрать день</string>
+    <string name="date">Дата</string>
+    <string name="to_select_time">Выбрать время</string>
+    <string name="start_at">Начало в</string>
+    <string name="add_participant">Добавить участника</string>
+    <string name="remove_date">Удалить дату</string>
+    <string name="add_variant">Добавить вариант</string>
+    <string name="select_time">Выбере время</string>
+    <string name="event_happens_at">Событие пройдет</string>
+    <string name="search">Поиск</string>
+    <string name="to_invite">Пригласить</string>
 </resources>

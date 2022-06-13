@@ -11,6 +11,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -21,6 +22,7 @@ import org.kvpbldsck.nastolochki.vedro.ui.theme.SingleLineCalendarTextStyle
 import org.kvpbldsck.nastolochki.vedro.utils.*
 import java.time.LocalDate
 import java.time.Month
+import java.time.Period
 
 @Composable
 fun SingleLineCalendar(
@@ -35,20 +37,13 @@ fun SingleLineCalendar(
     val year = LocalDate.now().year
     val yearStart = LocalDate.of(year, Month.JANUARY, 1)
     val yearEnd = LocalDate.of(year, Month.DECEMBER, 31)
-    val totalDays = yearEnd.dayOfYear - yearStart.dayOfYear
 
-    val dates = (0L..totalDays)
-        .map { daysToAdd -> yearStart.plusDays(daysToAdd)}
+    val dates = (yearStart .. yearEnd step Period.ofDays(1))
         .toList()
 
     val calendarItemModifier = Modifier
         .clip(SingleLineCalendarItemShape)
         .size(35.dp, 60.dp)
-    val selectedCalendarItemModifier = Modifier
-        .clip(SingleLineCalendarItemShape)
-        .size(35.dp, 60.dp)
-        .border(1.5.dp, MaterialTheme.colors.primary, SingleLineCalendarItemShape)
-        .padding(0.dp)
 
     val listState = rememberLazyListState()
 
@@ -63,17 +58,29 @@ fun SingleLineCalendar(
         onMonthChanged(month)
     }
 
+    val offset = 8.dp.toPixels()
+
     LazyRow(
         state = listState,
         horizontalArrangement = Arrangement.spacedBy(14.dp)) {
 
-        items(dates) { date ->
+        items(dates.size) { index ->
 
-            val buttonModifier =
-                if (date == selectedDate)
-                    selectedCalendarItemModifier
-                else
-                    calendarItemModifier
+            val date = dates[index]
+
+            var buttonModifier = calendarItemModifier
+
+            val item = listState.layoutInfo.visibleItemsInfo.firstOrNull { it.index == index }
+            if (item != null) {
+                buttonModifier = buttonModifier
+                        .alpha(animateListCornerElements(item, listState.layoutInfo, offset))
+            }
+
+            if (date == selectedDate) {
+                buttonModifier = buttonModifier
+                    .border(1.5.dp, MaterialTheme.colors.primary, SingleLineCalendarItemShape)
+                    .padding(0.dp)
+            }
 
             TextButton(
                 onClick = { onDateSelect(date) },

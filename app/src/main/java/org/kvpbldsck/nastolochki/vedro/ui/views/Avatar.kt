@@ -12,6 +12,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import org.kvpbldsck.nastolochki.vedro.models.User
 import org.kvpbldsck.nastolochki.vedro.ui.screens.events.models.getTestEventsViewState
@@ -19,11 +20,11 @@ import org.kvpbldsck.nastolochki.vedro.ui.theme.NastolochkiVedroTheme
 import org.kvpbldsck.nastolochki.vedro.ui.theme.colorsForDefaultAvatar
 
 @Composable
-fun Avatar(user: User) {
+fun Avatar(user: User, size: Dp = 32.dp) {
     Box(
         contentAlignment = Alignment.Center,
         modifier = Modifier
-            .size(32.dp)
+            .size(size)
             .clip(CircleShape)
             .background(colorsForDefaultAvatar[user.name.hashCode() % colorsForDefaultAvatar.size])) {
 

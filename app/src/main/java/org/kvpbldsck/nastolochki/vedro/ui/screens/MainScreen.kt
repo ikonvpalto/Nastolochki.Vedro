@@ -3,12 +3,9 @@ package org.kvpbldsck.nastolochki.vedro.ui.screens
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.layout.HorizontalAlignmentLine
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -25,14 +22,18 @@ import org.kvpbldsck.nastolochki.vedro.ui.routes.MainScreens
 import org.kvpbldsck.nastolochki.vedro.ui.routes.Routes
 import org.kvpbldsck.nastolochki.vedro.ui.screens.events.EventsScreen
 import org.kvpbldsck.nastolochki.vedro.ui.screens.events.EventsViewModel
+import org.kvpbldsck.nastolochki.vedro.ui.screens.new_event.NewEventScreen
+import org.kvpbldsck.nastolochki.vedro.ui.screens.new_event.NewEventViewModel
 import org.kvpbldsck.nastolochki.vedro.ui.theme.NastolochkiVedroTheme
 import org.kvpbldsck.nastolochki.vedro.ui.theme.navigationButtonTextStyle
 
 @Composable
 fun MainScreen() {
     val navController = rememberNavController()
+
     val eventsViewModel = EventsViewModel()
-    
+    val newEventViewModel = NewEventViewModel()
+
     Surface(
         modifier = Modifier.fillMaxSize(),
         color = MaterialTheme.colors.background
@@ -42,7 +43,7 @@ fun MainScreen() {
         ) { innerPadding ->
             NavHost(
                 navController = navController,
-                startDestination = Routes.Events.route,
+                startDestination = MainScreens.startScreen,
                 Modifier.padding(innerPadding)
             ) {
                 composable(Routes.Events.route) {
@@ -52,7 +53,7 @@ fun MainScreen() {
                     Text(text = stringResource(id = R.string.groups))
                 }
                 composable(Routes.NewEvent.route) {
-                    Text(text = stringResource(id = R.string.new_event))
+                    NewEventScreen(newEventViewModel)
                 }
                 composable(Routes.Chats.route) {
                     Text(text = stringResource(id = R.string.chats))

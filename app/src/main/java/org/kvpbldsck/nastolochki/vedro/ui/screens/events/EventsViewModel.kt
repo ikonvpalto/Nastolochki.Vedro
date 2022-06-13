@@ -27,9 +27,9 @@ class EventsViewModel : ViewModel() {
         val state = viewState.value!!
         _viewState.postValue(state.copy(events = state.events.map {
             if (it == event && checked) {
-                it.copy(votedDates = (it.votedDates + date).distinct())
+                it.copy(votedDates = it.votedDates.plus(date))
             } else if (it == event) {
-                it.copy(votedDates = it.votedDates.filter { d -> d != date })
+                it.copy(votedDates = it.votedDates.minus(date))
             } else {
                 it.copy()
             }

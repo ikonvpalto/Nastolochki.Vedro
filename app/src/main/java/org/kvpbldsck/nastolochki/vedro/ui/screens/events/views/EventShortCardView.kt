@@ -13,6 +13,7 @@ import org.kvpbldsck.nastolochki.vedro.R
 import org.kvpbldsck.nastolochki.vedro.models.EventModel
 import org.kvpbldsck.nastolochki.vedro.ui.screens.events.models.getTestEventsViewState
 import org.kvpbldsck.nastolochki.vedro.ui.theme.NastolochkiVedroTheme
+import org.kvpbldsck.nastolochki.vedro.ui.theme.UiColors
 import org.kvpbldsck.nastolochki.vedro.ui.views.IconWithText
 import org.kvpbldsck.nastolochki.vedro.utils.formatShortTime
 
@@ -25,7 +26,7 @@ fun EventShortCardView(modifier: Modifier, event: EventModel)
         modifier = modifier
     ) {
         Column(modifier = Modifier.padding(24.dp)) {
-            Text(text = stringResource(R.string.participant), modifier = Modifier.alpha(0.8f))
+            Text(text = stringResource(R.string.participant), modifier = Modifier.alpha(UiColors.SubtitleTextAlpha))
             Text(text = event.title, style = MaterialTheme.typography.h6)
             Spacer(Modifier.height(8.dp))
             IconWithText(icon = painterResource(id = R.drawable.icon_clock), text = event.selectedDate!!.toLocalTime().formatShortTime())

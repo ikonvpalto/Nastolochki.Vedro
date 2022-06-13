@@ -1,6 +1,5 @@
 package org.kvpbldsck.nastolochki.vedro.ui.theme
 
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Typography
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
@@ -19,6 +18,21 @@ val Typography = Typography(
         fontFamily = FontFamily.Default,
         fontWeight = FontWeight.Normal,
         fontSize = 12.sp,
+    ),
+    h4 = TextStyle(
+        fontWeight = FontWeight.SemiBold,
+        fontSize = 18.sp,
+        letterSpacing = 0.sp
+    ),
+    h5 = TextStyle(
+        fontWeight = FontWeight.Medium,
+        fontSize = 18.sp,
+        letterSpacing = 0.sp
+    ),
+    h6 = TextStyle(
+        fontWeight = FontWeight.Medium,
+        fontSize = 16.sp,
+        letterSpacing = 0.15.sp
     )
 
     /* Other default text styles to override
@@ -32,7 +46,7 @@ val Typography = Typography(
 
 val SingleLineCalendarTextStyle = TextStyle(
     fontFamily = FontFamily.Default,
-    fontWeight = FontWeight.Bold,
+    fontWeight = FontWeight.SemiBold,
     fontSize = 16.sp
 )
 

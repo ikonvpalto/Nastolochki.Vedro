@@ -6,6 +6,9 @@ object UiColors {
     val Orange = Color(0XFFFF9900)
     val White = Color(0XFFFFFFFF)
     val Black = Color(0XFF000000)
+    const val TextFieldPlaceholderAlpha = 0.4f
+    const val TextFieldUnderlineAlpha = 0.1f
+    const val SubtitleTextAlpha = 0.7f
 }
 
 val colorsForDefaultAvatar = listOf(

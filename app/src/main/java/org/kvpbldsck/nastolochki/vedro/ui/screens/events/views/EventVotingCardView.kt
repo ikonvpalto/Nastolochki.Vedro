@@ -18,9 +18,10 @@ import org.kvpbldsck.nastolochki.vedro.R
 import org.kvpbldsck.nastolochki.vedro.models.EventModel
 import org.kvpbldsck.nastolochki.vedro.ui.screens.events.models.getTestEventsViewState
 import org.kvpbldsck.nastolochki.vedro.ui.theme.NastolochkiVedroTheme
+import org.kvpbldsck.nastolochki.vedro.ui.theme.UiColors
 import org.kvpbldsck.nastolochki.vedro.ui.views.Avatar
 import org.kvpbldsck.nastolochki.vedro.ui.views.IconWithText
-import org.kvpbldsck.nastolochki.vedro.utils.DateFormats
+import org.kvpbldsck.nastolochki.vedro.utils.DateTimeFormats
 import java.time.LocalDateTime
 
 @OptIn(ExperimentalMaterialApi::class, ExperimentalFoundationApi::class)
@@ -38,7 +39,7 @@ fun EventVotingCardView(
         modifier = modifier)
     {
         Column(modifier = Modifier.padding(24.dp)) {
-            Text(text = stringResource(R.string.participant), modifier = Modifier.alpha(0.8f))
+            Text(text = stringResource(R.string.participant), modifier = Modifier.alpha(UiColors.SubtitleTextAlpha))
 
             Text(text = event.title, style = MaterialTheme.typography.h6)
 
@@ -75,7 +76,7 @@ fun EventVotingCardView(
                             checked = event.votedDates.contains(dateVariant),
                             onCheckedChange = { onDateToggled(dateVariant, it) },
                             enabled = !event.isVoted)
-                        Text(text = DateFormats.getLongDateAndTimeFormat().format(dateVariant))
+                        Text(text = DateTimeFormats.getLongDateAndTimeFormat().format(dateVariant))
                     }
                 }
             }

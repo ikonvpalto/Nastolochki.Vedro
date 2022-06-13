@@ -1,8 +1,6 @@
 package org.kvpbldsck.nastolochki.vedro.ui.screens.events.views
 
 import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.gestures.Orientation
-import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
@@ -16,15 +14,13 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.vanpra.composematerialdialogs.MaterialDialog
-import com.vanpra.composematerialdialogs.datetime.date.datepicker
-import com.vanpra.composematerialdialogs.rememberMaterialDialogState
 import org.kvpbldsck.nastolochki.vedro.R
 import org.kvpbldsck.nastolochki.vedro.models.EventModel
 import org.kvpbldsck.nastolochki.vedro.ui.screens.events.models.EventsViewState
 import org.kvpbldsck.nastolochki.vedro.ui.screens.events.models.getTestEventsViewState
 import org.kvpbldsck.nastolochki.vedro.ui.views.SingleLineCalendar
 import org.kvpbldsck.nastolochki.vedro.ui.theme.NastolochkiVedroTheme
+import org.kvpbldsck.nastolochki.vedro.ui.views.dialogs.datePickerDialog
 import java.time.LocalDate
 import java.time.LocalDateTime
 
@@ -39,40 +35,28 @@ fun EventsPageView(
     modifier: Modifier
 ) {
 
-    val dialogState = rememberMaterialDialogState()
-    MaterialDialog(
-        dialogState = dialogState,
-        buttons = {
-            positiveButton(stringResource(id = R.string.ok))
-            negativeButton(stringResource(id = R.string.cancel))
-        }
-    ) {
-        datepicker(
-            initialDate = eventsViewState.selectedDate,
-            title = stringResource(id = R.string.select_date),
-            yearRange = IntRange(eventsViewState.selectedDate.year, eventsViewState.selectedDate.year)
-        ) { date -> onDateSelect(date) }
-    }
+    val showDatePicker = datePickerDialog(initialDate = eventsViewState.selectedDate, onDateSelect = onDateSelect)
 
     val scrollableState = rememberScrollState()
 
-    Column(modifier = modifier
-        .padding(16.dp, 24.dp)
-        .wrapContentHeight()
-        .verticalScroll(scrollableState)
+    Column(
+        modifier = modifier
+            .wrapContentHeight()
+            .verticalScroll(scrollableState)
+            .padding(16.dp, 24.dp)
     ) {
         Row(
-            Modifier.wrapContentSize(),
-            verticalAlignment = Alignment.Top)
-        {
+            modifier = Modifier.wrapContentSize(),
+            verticalAlignment = Alignment.Top
+        ) {
             Text(
-                style = MaterialTheme.typography.h6,
+                style = MaterialTheme.typography.h5,
                 text = eventsViewState.currentMonth)
 
             Spacer(modifier = Modifier.width(12.dp))
 
             IconButton(
-                onClick = { dialogState.show() },
+                onClick = { showDatePicker() },
                 content = {
                     Icon(
                         painter = painterResource(id = R.drawable.icon_calendar),
@@ -81,23 +65,21 @@ fun EventsPageView(
                 modifier = Modifier.size(24.dp)
             )
         }
-        Row{
-            Spacer(modifier = Modifier.height(8.dp))
-        }
-        Row {
-            SingleLineCalendar(
-                selectedDate = eventsViewState.selectedDate,
-                currentMonth = eventsViewState.currentMonth,
-                onDateSelect = onDateSelect,
-                onMonthChanged = onMonthChanged)
-        }
-        Column{
-            Spacer(modifier = Modifier.height(24.dp))
-            Text(
-                text = stringResource(id = R.string.voting),
-                style = MaterialTheme.typography.h6)
-            Spacer(modifier = Modifier.height(8.dp))
-        }
+
+        Spacer(modifier = Modifier.height(8.dp))
+
+        SingleLineCalendar(
+            selectedDate = eventsViewState.selectedDate,
+            currentMonth = eventsViewState.currentMonth,
+            onDateSelect = onDateSelect,
+            onMonthChanged = onMonthChanged)
+
+        Spacer(modifier = Modifier.height(24.dp))
+        Text(
+            text = stringResource(id = R.string.voting),
+            style = MaterialTheme.typography.h5)
+        Spacer(modifier = Modifier.height(8.dp))
+
         LazyRow(
             contentPadding = PaddingValues(4.dp),
             horizontalArrangement = Arrangement.spacedBy(12.dp))
@@ -116,13 +98,11 @@ fun EventsPageView(
             }
         }
 
-        Column {
-            Spacer(modifier = Modifier.height(24.dp))
-            Text(
-                text = stringResource(id = R.string.today),
-                style = MaterialTheme.typography.h6)
-            Spacer(modifier = Modifier.height(12.dp))
-        }
+        Spacer(modifier = Modifier.height(24.dp))
+        Text(
+            text = stringResource(id = R.string.today),
+            style = MaterialTheme.typography.h5)
+        Spacer(modifier = Modifier.height(12.dp))
 
         for (event in eventsViewState.events.filter { it.isDateSelected && it.selectedDate!!.toLocalDate() == eventsViewState.selectedDate }) {
             EventShortCardView(modifier = Modifier.fillMaxWidth(), event = event)

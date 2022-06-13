@@ -19,5 +19,7 @@ sealed class MainScreens(val route: Routes, @DrawableRes val drawableResId: Int,
             Chats,
             Profile
         )
+
+        val startScreen = NewEvent.route.route
     }
 }
