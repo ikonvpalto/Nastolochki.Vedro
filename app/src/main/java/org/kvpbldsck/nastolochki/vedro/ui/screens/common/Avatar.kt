@@ -1,4 +1,4 @@
-package org.kvpbldsck.nastolochki.vedro.ui.views
+package org.kvpbldsck.nastolochki.vedro.ui.screens.common
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -14,13 +14,13 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import org.kvpbldsck.nastolochki.vedro.models.User
+import org.kvpbldsck.nastolochki.vedro.ui.models.UserModel
 import org.kvpbldsck.nastolochki.vedro.ui.screens.events.models.getTestEventsViewState
 import org.kvpbldsck.nastolochki.vedro.ui.theme.NastolochkiVedroTheme
 import org.kvpbldsck.nastolochki.vedro.ui.theme.colorsForDefaultAvatar
 
 @Composable
-fun Avatar(user: User, size: Dp = 32.dp) {
+fun Avatar(user: UserModel, size: Dp = 32.dp) {
     Box(
         contentAlignment = Alignment.Center,
         modifier = Modifier
@@ -38,7 +38,7 @@ fun Avatar(user: User, size: Dp = 32.dp) {
 
 @Preview(showBackground = true)
 @Composable
-fun EventCardView_Preview() {
+fun Avatar_Preview() {
     NastolochkiVedroTheme {
         Avatar(user = getTestEventsViewState().events.first().participants.first())
     }

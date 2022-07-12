@@ -1,4 +1,4 @@
-package org.kvpbldsck.nastolochki.vedro.ui.views
+package org.kvpbldsck.nastolochki.vedro.ui.screens.common
 
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer

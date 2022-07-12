@@ -1,6 +1,5 @@
 package org.kvpbldsck.nastolochki.vedro.ui.screens.events.views
 
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
@@ -15,25 +14,25 @@ import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import org.kvpbldsck.nastolochki.vedro.R
-import org.kvpbldsck.nastolochki.vedro.models.EventModel
+import org.kvpbldsck.nastolochki.vedro.ui.screens.events.models.EventModel
 import org.kvpbldsck.nastolochki.vedro.ui.screens.events.models.getTestEventsViewState
 import org.kvpbldsck.nastolochki.vedro.ui.theme.NastolochkiVedroTheme
 import org.kvpbldsck.nastolochki.vedro.ui.theme.UiColors
-import org.kvpbldsck.nastolochki.vedro.ui.views.Avatar
-import org.kvpbldsck.nastolochki.vedro.ui.views.IconWithText
+import org.kvpbldsck.nastolochki.vedro.ui.screens.common.Avatar
+import org.kvpbldsck.nastolochki.vedro.ui.screens.common.IconWithText
 import org.kvpbldsck.nastolochki.vedro.utils.DateTimeFormats
 import java.time.LocalDateTime
 
-@OptIn(ExperimentalMaterialApi::class, ExperimentalFoundationApi::class)
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun EventVotingCardView(
+fun EventVotingCard(
     event: EventModel,
     onDateToggled: (LocalDateTime, Boolean) -> Unit,
     onVoted: (Boolean) -> Unit,
     modifier: Modifier
 )
 {
-    Surface(
+    Card(
         elevation = 4.dp,
         shape = MaterialTheme.shapes.large,
         modifier = modifier)
@@ -97,7 +96,7 @@ fun EventVotingCardView(
 @Composable
 fun EventVotingCardView_Preview() {
     NastolochkiVedroTheme {
-        EventVotingCardView(
+        EventVotingCard(
             getTestEventsViewState().events.first(),
             { _, _ -> },
             {},

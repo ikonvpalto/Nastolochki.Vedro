@@ -12,7 +12,7 @@ sealed class MainScreens(val route: Routes, @DrawableRes val drawableResId: Int,
     object Profile:  MainScreens(Routes.Profile,  R.drawable.icon_profile, R.string.profile,   isMajor = false)
 
     companion object {
-        fun getImplemented() = listOf(
+        fun getAll() = listOf(
             Events,
             Groups,
             NewEvent,

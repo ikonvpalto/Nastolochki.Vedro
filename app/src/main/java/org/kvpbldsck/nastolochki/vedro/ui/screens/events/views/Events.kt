@@ -15,29 +15,34 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import org.kvpbldsck.nastolochki.vedro.R
-import org.kvpbldsck.nastolochki.vedro.models.EventModel
+import org.kvpbldsck.nastolochki.vedro.ui.screens.events.models.EventModel
 import org.kvpbldsck.nastolochki.vedro.ui.screens.events.models.EventsViewState
 import org.kvpbldsck.nastolochki.vedro.ui.screens.events.models.getTestEventsViewState
-import org.kvpbldsck.nastolochki.vedro.ui.views.SingleLineCalendar
+import org.kvpbldsck.nastolochki.vedro.ui.screens.common.SingleLineCalendar
 import org.kvpbldsck.nastolochki.vedro.ui.theme.NastolochkiVedroTheme
-import org.kvpbldsck.nastolochki.vedro.ui.views.dialogs.datePickerDialog
+import org.kvpbldsck.nastolochki.vedro.ui.screens.common.dialogs.datePickerDialog
+import org.kvpbldsck.nastolochki.vedro.ui.screens.common.rememberSingleLineCalendarState
+import org.kvpbldsck.nastolochki.vedro.ui.screens.events.models.EventsScreenActions
+import org.kvpbldsck.nastolochki.vedro.utils.getCurrentYearDates
 import java.time.LocalDate
 import java.time.LocalDateTime
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun EventsPageView(
-    eventsViewState: EventsViewState,
-    onDateSelect: (LocalDate) -> Unit,
+fun Events(
+    viewState: EventsViewState,
+    viewAction: EventsScreenActions?,
+    onDateSelect: (LocalDate, Boolean) -> Unit,
     onMonthChanged: (String) -> Unit,
     onDateToggled: (EventModel, LocalDateTime, Boolean) -> Unit,
     onVoted: (EventModel, Boolean) -> Unit,
     modifier: Modifier
 ) {
 
-    val showDatePicker = datePickerDialog(initialDate = eventsViewState.selectedDate, onDateSelect = onDateSelect)
+    val showDatePicker = datePickerDialog(initialDate = viewState.selectedDate, onDateSelect = { onDateSelect(it, true) })
 
     val scrollableState = rememberScrollState()
+    val singleLineCalendarState = rememberSingleLineCalendarState(getCurrentYearDates())
 
     Column(
         modifier = modifier
@@ -51,7 +56,7 @@ fun EventsPageView(
         ) {
             Text(
                 style = MaterialTheme.typography.h5,
-                text = eventsViewState.currentMonth)
+                text = viewState.currentMonth)
 
             Spacer(modifier = Modifier.width(12.dp))
 
@@ -69,9 +74,10 @@ fun EventsPageView(
         Spacer(modifier = Modifier.height(8.dp))
 
         SingleLineCalendar(
-            selectedDate = eventsViewState.selectedDate,
-            currentMonth = eventsViewState.currentMonth,
-            onDateSelect = onDateSelect,
+            selectedDate = viewState.selectedDate,
+            currentMonth = viewState.currentMonth,
+            state = singleLineCalendarState,
+            onDateSelect = { onDateSelect(it, false) },
             onMonthChanged = onMonthChanged)
 
         Spacer(modifier = Modifier.height(24.dp))
@@ -85,12 +91,12 @@ fun EventsPageView(
             horizontalArrangement = Arrangement.spacedBy(12.dp))
         {
             items(
-                items = eventsViewState.events
+                items = viewState.events
                     .filter { !it.isDateSelected }
                     .sortedBy { it.isVoted },
                 key = { e -> e.id })
             { event ->
-                EventVotingCardView(
+                EventVotingCard(
                     event = event,
                     onDateToggled = { date, isChecked -> onDateToggled(event, date, isChecked) },
                     onVoted = { onVoted(event, it) },
@@ -104,22 +110,30 @@ fun EventsPageView(
             style = MaterialTheme.typography.h5)
         Spacer(modifier = Modifier.height(12.dp))
 
-        for (event in eventsViewState.events.filter { it.isDateSelected && it.selectedDate!!.toLocalDate() == eventsViewState.selectedDate }) {
-            EventShortCardView(modifier = Modifier.fillMaxWidth(), event = event)
+        for (event in viewState.events.filter { it.isDateSelected && it.selectedDate!!.toLocalDate() == viewState.selectedDate }) {
+            EventShortCard(modifier = Modifier.fillMaxWidth(), event = event)
         }
 
         Spacer(modifier = Modifier.height(12.dp))
+    }
+    
+    LaunchedEffect(viewAction) {
+        when (viewAction) {
+            is EventsScreenActions.ScrollDateToView -> singleLineCalendarState.scrollToDate(viewAction.date)
+            null -> {}
+        }
     }
 
 }
 
 @Preview(showBackground = true)
 @Composable
-fun EventsPageView_Preview() {
+fun Events_Preview() {
     NastolochkiVedroTheme {
-        EventsPageView(
+        Events(
             getTestEventsViewState(),
-            {},
+            null,
+            { _, _ -> },
             {},
             { _, _, _ -> },
             { _, _ -> },

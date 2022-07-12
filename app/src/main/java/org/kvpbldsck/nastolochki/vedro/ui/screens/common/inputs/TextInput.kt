@@ -1,4 +1,4 @@
-package org.kvpbldsck.nastolochki.vedro.ui.views
+package org.kvpbldsck.nastolochki.vedro.ui.screens.common
 
 import androidx.annotation.StringRes
 import androidx.compose.foundation.background

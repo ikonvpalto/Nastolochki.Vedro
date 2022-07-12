@@ -5,8 +5,8 @@ import java.time.LocalDateTime
 import java.time.LocalTime
 
 data class NewEventDateTime(
-    val date: LocalDate?,
-    val time: LocalTime?
+    val date: LocalDate? = null,
+    val time: LocalTime? = null
 ) {
     constructor(dateTime: LocalDateTime?) : this(
         date = dateTime?.toLocalDate(),

@@ -18,12 +18,12 @@ import com.google.accompanist.pager.pagerTabIndicatorOffset
 import com.google.accompanist.pager.rememberPagerState
 import kotlinx.coroutines.launch
 import org.kvpbldsck.nastolochki.vedro.R
-import org.kvpbldsck.nastolochki.vedro.models.User
+import org.kvpbldsck.nastolochki.vedro.ui.models.UserModel
 import org.kvpbldsck.nastolochki.vedro.ui.screens.new_event.models.NewEventTypeEnum
 import org.kvpbldsck.nastolochki.vedro.ui.screens.new_event.models.NewEventViewState
 import org.kvpbldsck.nastolochki.vedro.ui.theme.NastolochkiVedroTheme
-import org.kvpbldsck.nastolochki.vedro.ui.views.TextInput
-import org.kvpbldsck.nastolochki.vedro.ui.views.inputs.*
+import org.kvpbldsck.nastolochki.vedro.ui.screens.common.TextInput
+import org.kvpbldsck.nastolochki.vedro.ui.screens.common.inputs.*
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
@@ -40,9 +40,11 @@ fun NewEventPageView(
     onTimeChanged: (LocalTime) -> Unit,
     onDateTimeAdded: (LocalDateTime) -> Unit,
     onDateTimeRemoved: (Int) -> Unit,
-    onParticipantAdded: (User) -> Unit,
+    onParticipantAdded: (UserModel) -> Unit,
     onParticipantRemoved: (Int) -> Unit,
-    modifier: Modifier
+    onEventCreated: () -> Unit,
+    modifier: Modifier,
+    padding: PaddingValues
 ) {
 
     val uiScope = rememberCoroutineScope()
@@ -55,7 +57,8 @@ fun NewEventPageView(
     }
 
     Column(
-        modifier = modifier.fillMaxHeight(),
+        modifier = Modifier.fillMaxHeight().padding(padding),
+//        modifier = Modifier.padding(padding).fillMaxHeight(),
         verticalArrangement = Arrangement.Top
     ) {
 
@@ -88,18 +91,16 @@ fun NewEventPageView(
         }
 
         HorizontalPager(
-            modifier = Modifier.wrapContentHeight(),
+            modifier = Modifier
+                .wrapContentHeight()
+                .verticalScroll(scrollableState)
+                .padding(horizontal = 16.dp),
             count = NewEventTypeEnum.values().size,
             state = pagerState,
             verticalAlignment = Alignment.Top
         ) { tabIndex ->
 
-            Column(
-                modifier = Modifier
-                    .wrapContentHeight()
-                    .verticalScroll(scrollableState)
-                    .padding(horizontal = 16.dp)
-            ) {
+            Column(horizontalAlignment = Alignment.CenterHorizontally) {
 
                 TextInput(
                     value = newEventViewState.title,
@@ -153,16 +154,28 @@ fun NewEventPageView(
 
                 Spacer(modifier = Modifier.height(16.dp))
 
-                Text(text = "${stringResource(id = R.string.participants)}:", style = MaterialTheme.typography.h6)
+                Text(
+                    text = "${stringResource(id = R.string.participants)}:",
+                    style = MaterialTheme.typography.h6,
+                    modifier = Modifier.fillMaxWidth())
 
                 Spacer(modifier = Modifier.height(8.dp))
 
                 UserListInputWithPicker(
                     selectedUsers = newEventViewState.participants,
-                    availableUsers = User.getTestUsers().minus(newEventViewState.participants.toSet()),
+                    availableUsers = UserModel.getTestUsers().minus(newEventViewState.participants.toSet()),
                     onUserAdded = onParticipantAdded,
                     onUserRemoved = onParticipantRemoved
                 )
+
+                Spacer(modifier = Modifier.height(16.dp))
+
+                Button(
+                    onClick = onEventCreated,
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Text(text = stringResource(id = R.string.create_event))
+                }
 
             }
 
@@ -187,7 +200,9 @@ fun NewEventPageView_PreviewExactTime() {
             onDateTimeRemoved = {},
             onParticipantAdded = {},
             onParticipantRemoved = {},
-            modifier = Modifier.Companion
+            onEventCreated = {},
+            modifier = Modifier.Companion,
+            padding = PaddingValues(0.dp)
         )
     }
 }
@@ -208,7 +223,9 @@ fun NewEventPageView_PreviewVoting() {
             onDateTimeRemoved = {},
             onParticipantAdded = {},
             onParticipantRemoved = {},
-            modifier = Modifier.Companion
+            onEventCreated = {},
+            modifier = Modifier.Companion,
+            padding = PaddingValues(0.dp)
         )
     }
 }

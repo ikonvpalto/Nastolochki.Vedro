@@ -6,7 +6,7 @@ import java.time.LocalDateTime
 import java.time.LocalTime
 
 fun LocalDate.getCapitalizeMonthName(): String = this.getMonthName().capitalize()
-fun LocalDate.getMonthName(): String = DateTimeFormats.getMonthFormat().format(this)
+private fun LocalDate.getMonthName(): String = DateTimeFormats.getMonthFormat().format(this)
 fun LocalDate.getWeekDayShortName(): String = DateTimeFormats.getWeekDayFormat().format(this)
 fun LocalTime.formatShortTime(): String = DateTimeFormats.getShortTimeFormat().format(this)
 

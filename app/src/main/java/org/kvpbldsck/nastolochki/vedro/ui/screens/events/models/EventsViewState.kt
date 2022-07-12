@@ -1,28 +1,24 @@
 package org.kvpbldsck.nastolochki.vedro.ui.screens.events.models
 
-import org.kvpbldsck.nastolochki.vedro.models.EventModel
-import org.kvpbldsck.nastolochki.vedro.models.User
-import org.kvpbldsck.nastolochki.vedro.utils.capitalize
-import org.kvpbldsck.nastolochki.vedro.utils.getMonthName
+import org.kvpbldsck.nastolochki.vedro.ui.models.UserModel
+import org.kvpbldsck.nastolochki.vedro.utils.getCapitalizeMonthName
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.util.*
 
 data class EventsViewState(
-    val selectedDate: LocalDate,
-    val currentMonth: String,
-    val events: List<EventModel>
+    val selectedDate: LocalDate = LocalDate.now(),
+    val currentMonth: String = LocalDate.now().getCapitalizeMonthName(),
+    val events: List<EventModel> = emptyList()
 )
 
 fun getTestEventsViewState() = EventsViewState(
-    LocalDate.now(),
-    LocalDate.now().getMonthName().capitalize(),
-    listOf(
+    events = listOf(
         EventModel(
             id = UUID.randomUUID(),
             title = "Настолки у Пети",
             address = "ул. Свободы 20",
-            participants = User.getTestUsers(),
+            participants = UserModel.getTestUsers(),
             possibleDates = (-1L..2L).map{ LocalDateTime.now().plusDays(it) }.toList(),
             votedDates = listOf(),
             isVoted = false,
@@ -33,7 +29,7 @@ fun getTestEventsViewState() = EventsViewState(
             id = UUID.randomUUID(),
             title = "Настолки у Васи",
             address = "ул. Независимости 20",
-            participants = User.getTestUsers(),
+            participants = UserModel.getTestUsers(),
             possibleDates = (-2L..1L).map{ LocalDateTime.now().plusDays(it) }.toList(),
             votedDates = listOf(),
             isVoted = false,
@@ -44,7 +40,7 @@ fun getTestEventsViewState() = EventsViewState(
             id = UUID.randomUUID(),
             title = "Настолки у Иры",
             address = "ул. Гикало 20",
-            participants = User.getTestUsers(),
+            participants = UserModel.getTestUsers(),
             possibleDates = (0L..2L).map{ LocalDateTime.now().plusDays(it) }.toList(),
             votedDates = listOf(),
             isVoted = false,
@@ -56,7 +52,7 @@ fun getTestEventsViewState() = EventsViewState(
             id = UUID.randomUUID(),
             title = "Настолки у Васи",
             address = "ул. Улицы 30",
-            participants = User.getTestUsers(),
+            participants = UserModel.getTestUsers(),
             possibleDates = listOf(),
             votedDates = listOf(),
             isVoted = false,
@@ -67,7 +63,7 @@ fun getTestEventsViewState() = EventsViewState(
             id = UUID.randomUUID(),
             title = "Настолки у Пети",
             address = "ул. Свободы 20",
-            participants = User.getTestUsers(),
+            participants = UserModel.getTestUsers(),
             possibleDates = listOf(),
             votedDates = listOf(),
             isVoted = false,
@@ -78,7 +74,7 @@ fun getTestEventsViewState() = EventsViewState(
             id = UUID.randomUUID(),
             title = "Настолки у Васи",
             address = "ул. Независимости 20",
-            participants = User.getTestUsers(),
+            participants = UserModel.getTestUsers(),
             possibleDates = listOf(),
             votedDates = listOf(),
             isVoted = false,

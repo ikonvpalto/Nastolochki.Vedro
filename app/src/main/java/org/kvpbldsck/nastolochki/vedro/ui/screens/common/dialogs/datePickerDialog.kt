@@ -1,17 +1,17 @@
-package org.kvpbldsck.nastolochki.vedro.ui.views.dialogs
+package org.kvpbldsck.nastolochki.vedro.ui.screens.common.dialogs
 
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.vanpra.composematerialdialogs.MaterialDialog
-import com.vanpra.composematerialdialogs.datetime.time.timepicker
+import com.vanpra.composematerialdialogs.datetime.date.datepicker
 import com.vanpra.composematerialdialogs.rememberMaterialDialogState
 import org.kvpbldsck.nastolochki.vedro.R
 import org.kvpbldsck.nastolochki.vedro.ui.theme.NastolochkiVedroTheme
-import java.time.LocalTime
+import java.time.LocalDate
 
 @Composable
-fun timePickerDialog(initialTime: LocalTime, onTimeSelect: (LocalTime) -> Unit): () -> Unit {
+fun datePickerDialog(initialDate: LocalDate, onDateSelect: (LocalDate) -> Unit): () -> Unit {
     val dialogState = rememberMaterialDialogState()
     MaterialDialog(
         dialogState = dialogState,
@@ -20,21 +20,21 @@ fun timePickerDialog(initialTime: LocalTime, onTimeSelect: (LocalTime) -> Unit):
             negativeButton(stringResource(id = R.string.cancel))
         }
     ) {
-        timepicker(
-            initialTime = initialTime,
-            title = stringResource(id = R.string.select_time),
-            is24HourClock = true,
-            onTimeChange = onTimeSelect
+        datepicker(
+            initialDate = initialDate,
+            title = stringResource(id = R.string.select_date),
+            yearRange = IntRange(initialDate.year, initialDate.year),
+            onDateChange = onDateSelect
         )
     }
 
-    return dialogState::show
+    return  dialogState::show
 }
 
 @Composable
 @Preview(showBackground = true)
-fun TimePickerDialog_Preview() {
+fun DatePickerDialog_Preview() {
     NastolochkiVedroTheme {
-        timePickerDialog(initialTime = LocalTime.now(), onTimeSelect = {})()
+        datePickerDialog(initialDate = LocalDate.now(), onDateSelect = {})()
     }
 }

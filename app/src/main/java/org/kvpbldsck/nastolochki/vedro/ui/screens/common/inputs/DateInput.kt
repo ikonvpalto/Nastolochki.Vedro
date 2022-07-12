@@ -1,11 +1,11 @@
-package org.kvpbldsck.nastolochki.vedro.ui.views.inputs
+package org.kvpbldsck.nastolochki.vedro.ui.screens.common.inputs
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import org.kvpbldsck.nastolochki.vedro.R
 import org.kvpbldsck.nastolochki.vedro.ui.theme.NastolochkiVedroTheme
-import org.kvpbldsck.nastolochki.vedro.ui.views.dialogs.datePickerDialog
+import org.kvpbldsck.nastolochki.vedro.ui.screens.common.dialogs.datePickerDialog
 import org.kvpbldsck.nastolochki.vedro.utils.DateTimeFormats
 import java.time.LocalDate
 

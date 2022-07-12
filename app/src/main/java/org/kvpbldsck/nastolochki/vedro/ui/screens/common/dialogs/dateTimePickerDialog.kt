@@ -1,4 +1,4 @@
-package org.kvpbldsck.nastolochki.vedro.ui.views.dialogs
+package org.kvpbldsck.nastolochki.vedro.ui.screens.common.dialogs
 
 import androidx.compose.runtime.*
 import androidx.compose.ui.res.stringResource

@@ -10,17 +10,17 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import org.kvpbldsck.nastolochki.vedro.R
-import org.kvpbldsck.nastolochki.vedro.models.EventModel
+import org.kvpbldsck.nastolochki.vedro.ui.screens.events.models.EventModel
 import org.kvpbldsck.nastolochki.vedro.ui.screens.events.models.getTestEventsViewState
 import org.kvpbldsck.nastolochki.vedro.ui.theme.NastolochkiVedroTheme
 import org.kvpbldsck.nastolochki.vedro.ui.theme.UiColors
-import org.kvpbldsck.nastolochki.vedro.ui.views.IconWithText
+import org.kvpbldsck.nastolochki.vedro.ui.screens.common.IconWithText
 import org.kvpbldsck.nastolochki.vedro.utils.formatShortTime
 
 @Composable
-fun EventShortCardView(modifier: Modifier, event: EventModel)
+fun EventShortCard(modifier: Modifier, event: EventModel)
 {
-    Surface(
+    Card(
         elevation = 2.dp,
         shape = MaterialTheme.shapes.large,
         modifier = modifier
@@ -37,9 +37,9 @@ fun EventShortCardView(modifier: Modifier, event: EventModel)
 
 @Preview(showBackground = true)
 @Composable
-fun EventShortCardView_Preview() {
+fun EventShortCard_Preview() {
     NastolochkiVedroTheme {
-        EventShortCardView(
+        EventShortCard(
             Modifier.Companion,
             getTestEventsViewState().events.first { it.isDateSelected }
         )

@@ -1,4 +1,4 @@
-package org.kvpbldsck.nastolochki.vedro.ui.views.dialogs
+package org.kvpbldsck.nastolochki.vedro.ui.screens.common.dialogs
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
@@ -15,9 +15,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.min
 import androidx.compose.ui.window.Dialog
 import org.kvpbldsck.nastolochki.vedro.R
-import org.kvpbldsck.nastolochki.vedro.models.User
+import org.kvpbldsck.nastolochki.vedro.ui.models.UserModel
 import org.kvpbldsck.nastolochki.vedro.ui.theme.NastolochkiVedroTheme
-import org.kvpbldsck.nastolochki.vedro.ui.views.Avatar
+import org.kvpbldsck.nastolochki.vedro.ui.screens.common.Avatar
 
 private data class UserPicker(
     val isOpened: Boolean,
@@ -25,7 +25,7 @@ private data class UserPicker(
 )
 
 @Composable
-fun userPickerDialog(possibleUsers: List<User>, onUserSelected: (User) -> Unit): () -> Unit {
+fun userPickerDialog(possibleUsers: List<UserModel>, onUserSelected: (UserModel) -> Unit): () -> Unit {
 
     var state by remember { mutableStateOf(UserPicker(false, "")) }
     val maxHeight = min(
@@ -108,6 +108,6 @@ fun userPickerDialog(possibleUsers: List<User>, onUserSelected: (User) -> Unit):
 @Preview(showBackground = true)
 fun UserPickerDialog_Preview() {
     NastolochkiVedroTheme {
-        userPickerDialog(possibleUsers = User.getTestUsers(), {})()
+        userPickerDialog(possibleUsers = UserModel.getTestUsers(), {})()
     }
 }

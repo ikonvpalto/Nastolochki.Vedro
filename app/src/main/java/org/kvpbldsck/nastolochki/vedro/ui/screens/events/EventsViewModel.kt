@@ -1,50 +1,63 @@
 package org.kvpbldsck.nastolochki.vedro.ui.screens.events
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import org.kvpbldsck.nastolochki.vedro.models.EventModel
+import dagger.hilt.android.lifecycle.HiltViewModel
+import org.kvpbldsck.nastolochki.vedro.ui.BaseViewModel
+import org.kvpbldsck.nastolochki.vedro.ui.screens.events.models.EventsScreenActions
+import org.kvpbldsck.nastolochki.vedro.ui.screens.events.models.EventsScreenEvents
 import org.kvpbldsck.nastolochki.vedro.ui.screens.events.models.EventsViewState
 import org.kvpbldsck.nastolochki.vedro.ui.screens.events.models.getTestEventsViewState
 import org.kvpbldsck.nastolochki.vedro.utils.capitalize
-import java.time.LocalDate
-import java.time.LocalDateTime
+import javax.inject.Inject
 
-class EventsViewModel : ViewModel() {
+@HiltViewModel
+class EventsViewModel @Inject constructor()
+    : BaseViewModel<EventsViewState, EventsScreenEvents, EventsScreenActions>(EventsViewState())
+{
 
-    private val _viewState: MutableLiveData<EventsViewState> = MutableLiveData(getTestEventsViewState())
-    val viewState: LiveData<EventsViewState> = _viewState
-
-    fun onDateSelected(date: LocalDate) {
-        _viewState.postValue(_viewState.value!!.copy(selectedDate = date))
+    override fun handleEvent(event: EventsScreenEvents) {
+        when (event) {
+            is EventsScreenEvents.DateSelected -> handleDateSelected(event)
+            is EventsScreenEvents.CalendarMonthChanged -> handleCurrentMonthChanged(event)
+            is EventsScreenEvents.EventDateToggled -> handleDateToggled(event)
+            is EventsScreenEvents.EventVoteToggled -> handleVoteToggle(event)
+        }
     }
 
-    fun onCurrentMonthChanged(month: String) {
-        _viewState.postValue(_viewState.value!!.copy(currentMonth = month.capitalize()))
+    private fun handleDateSelected(event: EventsScreenEvents.DateSelected) {
+        viewStateValue = viewStateValue.copy(selectedDate = event.date)
+        if (event.isScrollingNeeded) {
+            viewActionValue = EventsScreenActions.ScrollDateToView(event.date)
+        }
     }
 
-    fun onDateToggled(event: EventModel, date: LocalDateTime, checked: Boolean) {
-        val state = viewState.value!!
-        _viewState.postValue(state.copy(events = state.events.map {
-            if (it == event && checked) {
-                it.copy(votedDates = it.votedDates.plus(date))
-            } else if (it == event) {
-                it.copy(votedDates = it.votedDates.minus(date))
+    private fun handleCurrentMonthChanged(event: EventsScreenEvents.CalendarMonthChanged) {
+        viewStateValue = viewStateValue.copy(currentMonth = event.month.capitalize())
+    }
+
+    private fun handleDateToggled(event: EventsScreenEvents.EventDateToggled) {
+        viewStateValue = viewStateValue.copy(events = viewStateValue.events.map {
+            if (it.id == event.event.id && event.checked) {
+                it.copy(votedDates = it.votedDates.plus(event.date))
+            } else if (it.id == event.event.id) {
+                it.copy(votedDates = it.votedDates.minus(event.date))
             } else {
                 it.copy()
             }
-        }))
+        })
     }
 
-    fun onVoteToggle(event: EventModel, isVoted: Boolean) {
-        val state = viewState.value!!
-        _viewState.postValue(state.copy(events = state.events.map {
-            if (it == event) {
-                it.copy(isVoted = isVoted)
+    private fun handleVoteToggle(event: EventsScreenEvents.EventVoteToggled) {
+        viewStateValue = viewStateValue.copy(events = viewStateValue.events.map {
+            if (it.id == event.event.id) {
+                it.copy(isVoted = event.isVoted)
             } else {
                 it.copy()
             }
-        }))
+        })
+    }
+
+    companion object {
+        fun getPreviewViewModel() = EventsViewModel().apply { viewStateValue = getTestEventsViewState() }
     }
 
 }

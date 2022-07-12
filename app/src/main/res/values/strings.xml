@@ -34,4 +34,5 @@
     <string name="event_happens_at">Событие пройдет</string>
     <string name="search">Поиск</string>
     <string name="to_invite">Пригласить</string>
+    <string name="create_event">Создать событие</string>
 </resources>

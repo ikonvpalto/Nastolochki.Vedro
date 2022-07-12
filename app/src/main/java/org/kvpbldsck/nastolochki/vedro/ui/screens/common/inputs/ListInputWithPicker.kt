@@ -1,4 +1,4 @@
-package org.kvpbldsck.nastolochki.vedro.ui.views.inputs
+package org.kvpbldsck.nastolochki.vedro.ui.screens.common.inputs
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*

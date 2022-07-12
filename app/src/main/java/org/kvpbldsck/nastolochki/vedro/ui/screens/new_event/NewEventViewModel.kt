@@ -1,89 +1,115 @@
 package org.kvpbldsck.nastolochki.vedro.ui.screens.new_event
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import org.kvpbldsck.nastolochki.vedro.models.User
+import dagger.hilt.android.lifecycle.HiltViewModel
+import org.kvpbldsck.nastolochki.vedro.ui.BaseViewModel
+import org.kvpbldsck.nastolochki.vedro.ui.models.UserModel
+import org.kvpbldsck.nastolochki.vedro.ui.screens.new_event.models.NewEventScreenActions
+import org.kvpbldsck.nastolochki.vedro.ui.screens.new_event.models.NewEventScreenEvents
 import org.kvpbldsck.nastolochki.vedro.ui.screens.new_event.models.NewEventTypeEnum
 import org.kvpbldsck.nastolochki.vedro.ui.screens.new_event.models.NewEventViewState
-import org.kvpbldsck.nastolochki.vedro.utils.minus
-import java.time.LocalDate
+import org.kvpbldsck.nastolochki.vedro.utils.minusByIndex
 import java.time.LocalDateTime
-import java.time.LocalTime
+import javax.inject.Inject
 
-class NewEventViewModel : ViewModel() {
+@HiltViewModel
+class NewEventViewModel @Inject constructor() : BaseViewModel<NewEventViewState, NewEventScreenEvents, NewEventScreenActions>(NewEventViewState()) {
 
-    private val _viewState: MutableLiveData<NewEventViewState> = MutableLiveData(NewEventViewState.getTestState())
+    override fun handleEvent(event: NewEventScreenEvents) {
+        when (event) {
+            is NewEventScreenEvents.EventTypeChanged -> handleEventTypeChanged(event)
+            is NewEventScreenEvents.TitleChanged -> handleTitleChanged(event)
+            is NewEventScreenEvents.DescriptionChanged -> handleDescriptionChanged(event)
+            is NewEventScreenEvents.AddressChanged -> handleAddressChanged(event)
+            is NewEventScreenEvents.DateChanged -> handleDateChanged(event)
+            is NewEventScreenEvents.TimeChanged -> handleTimeChanged(event)
+            is NewEventScreenEvents.DateTimeAdded -> handleDateTimeAdded(event)
+            is NewEventScreenEvents.DateTimeRemoved -> handleDateTimeRemoved(event)
+            is NewEventScreenEvents.ParticipantAdded -> handleParticipantAdded(event)
+            is NewEventScreenEvents.ParticipantRemoved -> handleParticipantRemoved(event)
+            is NewEventScreenEvents.EventCreated -> handleEventCreated()
+        }
+    }
 
-    val viewState: LiveData<NewEventViewState> = _viewState
-
-    fun onEventTypeChanged(eventType: NewEventTypeEnum) {
-        val state = _viewState.value!!
-        if (eventType != state.type) {
-            _viewState.postValue(state.copy(type = eventType))
+    private fun handleEventTypeChanged(event: NewEventScreenEvents.EventTypeChanged) {
+        if (event.type != viewStateValue.type) {
+            viewStateValue = viewStateValue.copy(type = event.type)
         }
         else {
             // TODO: add logs
         }
     }
 
-    fun onTitleChanged(title: String) {
-        val state = _viewState.value!!
-        if (state.title != title) {
-            _viewState.postValue(state.copy(title = title))
+    private fun handleTitleChanged(event: NewEventScreenEvents.TitleChanged) {
+        if (viewStateValue.title != event.title) {
+            viewStateValue = viewStateValue.copy(title = event.title)
         }
     }
 
-    fun onDescriptionChanged(description: String) {
-        val state = _viewState.value!!
-        if (state.description != description) {
-            _viewState.postValue(state.copy(description = description))
+    private fun handleDescriptionChanged(event: NewEventScreenEvents.DescriptionChanged) {
+        if (viewStateValue.description != event.description) {
+            viewStateValue = viewStateValue.copy(description = event.description)
         }
     }
 
-    fun onAddressChanged(address: String) {
-        val state = _viewState.value!!
-        if (state.address != address) {
-            _viewState.postValue(state.copy(address = address))
+    private fun handleAddressChanged(event: NewEventScreenEvents.AddressChanged) {
+        if (viewStateValue.address != event.address) {
+            viewStateValue = viewStateValue.copy(address = event.address)
         }
     }
 
-    fun onDateChanged(date: LocalDate) {
-        val state = _viewState.value!!
-        if (state.type == NewEventTypeEnum.ExactTime) {
-            _viewState.postValue(state.copy(singleDate = state.singleDate.copy(date = date)))
+    private fun handleDateChanged(event: NewEventScreenEvents.DateChanged) {
+        if (viewStateValue.type == NewEventTypeEnum.ExactTime
+            && viewStateValue.singleDate.date != event.date
+        ) {
+            viewStateValue = viewStateValue.copy(singleDate = viewStateValue.singleDate.copy(date = event.date))
         }
     }
 
-    fun onTimeChanged(time: LocalTime) {
-        val state = _viewState.value!!
-        if (state.type == NewEventTypeEnum.ExactTime) {
-            _viewState.postValue(state.copy(singleDate = state.singleDate.copy(time = time)))
+    private fun handleTimeChanged(event: NewEventScreenEvents.TimeChanged) {
+        if (viewStateValue.type == NewEventTypeEnum.ExactTime
+            && viewStateValue.singleDate.time != event.time
+        ) {
+            viewStateValue = viewStateValue.copy(singleDate = viewStateValue.singleDate.copy(time = event.time))
         }
     }
 
-    fun onDateTimeAdded(dateTime: LocalDateTime) {
-        val state = _viewState.value!!
-        if (state.type == NewEventTypeEnum.WithVoting) {
-            _viewState.postValue(state.copy(possibleDates = state.possibleDates.plus(dateTime)))
+    private fun handleDateTimeAdded(event: NewEventScreenEvents.DateTimeAdded) {
+        if (viewStateValue.type == NewEventTypeEnum.WithVoting) {
+            if (viewStateValue.possibleDates.contains(event.dateTime)) {
+                viewActionValue = NewEventScreenActions.ShowDuplicateDateMessage
+            }
+            else {
+                viewStateValue = viewStateValue.copy(possibleDates = viewStateValue.possibleDates.plus(event.dateTime))
+            }
         }
     }
 
-    fun onDateTimeRemoved(indexToRemove: Int) {
-        val state = _viewState.value!!
-        if (state.type == NewEventTypeEnum.WithVoting) {
-            _viewState.postValue(state.copy(possibleDates = state.possibleDates.minus(indexToRemove)))
+    private fun handleDateTimeRemoved(event: NewEventScreenEvents.DateTimeRemoved) {
+        if (viewStateValue.type == NewEventTypeEnum.WithVoting
+            && viewStateValue.possibleDates.indices.contains(event.index)
+        ) {
+            viewStateValue = viewStateValue.copy(possibleDates = viewStateValue.possibleDates.minusByIndex(event.index))
         }
     }
 
-    fun onParticipantAdded(participant: User) {
-        val state = _viewState.value!!
-        _viewState.postValue(state.copy(participants = state.participants.plus(participant)))
+    private fun handleParticipantAdded(event: NewEventScreenEvents.ParticipantAdded) {
+        if (!viewStateValue.participants.any { it.name == event.participant.name }) {
+            viewStateValue =
+                viewStateValue.copy(participants = viewStateValue.participants.plus(event.participant))
+        }
     }
 
-    fun onParticipantRemoved(indexToRemove: Int) {
-        val state = _viewState.value!!
-        _viewState.postValue(state.copy(participants = state.participants.minus(indexToRemove)))
+    private fun handleParticipantRemoved(event: NewEventScreenEvents.ParticipantRemoved) {
+        if (viewStateValue.participants.indices.contains(event.index)) {
+            viewStateValue = viewStateValue.copy(
+                participants = viewStateValue.participants.minusByIndex(event.index)
+            )
+        }
     }
 
+    private fun handleEventCreated() {
+        TODO("Not yet implemented")
+        // val event = map(viewStateValue)
+        // repository.save(event)
+    }
 }

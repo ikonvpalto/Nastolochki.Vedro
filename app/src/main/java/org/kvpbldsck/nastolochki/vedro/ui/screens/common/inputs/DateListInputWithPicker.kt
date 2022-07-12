@@ -1,4 +1,4 @@
-package org.kvpbldsck.nastolochki.vedro.ui.views.inputs
+package org.kvpbldsck.nastolochki.vedro.ui.screens.common.inputs
 
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -11,7 +11,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import org.kvpbldsck.nastolochki.vedro.R
 import org.kvpbldsck.nastolochki.vedro.ui.theme.NastolochkiVedroTheme
-import org.kvpbldsck.nastolochki.vedro.ui.views.dialogs.dateTimePickerDialog
+import org.kvpbldsck.nastolochki.vedro.ui.screens.common.dialogs.dateTimePickerDialog
 import org.kvpbldsck.nastolochki.vedro.utils.DateTimeFormats
 import org.kvpbldsck.nastolochki.vedro.utils.ceilingTimeTo
 import java.time.Duration
