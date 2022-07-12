@@ -43,8 +43,7 @@ fun NewEventPageView(
     onParticipantAdded: (UserModel) -> Unit,
     onParticipantRemoved: (Int) -> Unit,
     onEventCreated: () -> Unit,
-    modifier: Modifier,
-    padding: PaddingValues
+    modifier: Modifier
 ) {
 
     val uiScope = rememberCoroutineScope()
@@ -57,8 +56,7 @@ fun NewEventPageView(
     }
 
     Column(
-        modifier = Modifier.fillMaxHeight().padding(padding),
-//        modifier = Modifier.padding(padding).fillMaxHeight(),
+        modifier = modifier.fillMaxHeight(),
         verticalArrangement = Arrangement.Top
     ) {
 
@@ -201,8 +199,7 @@ fun NewEventPageView_PreviewExactTime() {
             onParticipantAdded = {},
             onParticipantRemoved = {},
             onEventCreated = {},
-            modifier = Modifier.Companion,
-            padding = PaddingValues(0.dp)
+            modifier = Modifier.Companion
         )
     }
 }
@@ -224,8 +221,7 @@ fun NewEventPageView_PreviewVoting() {
             onParticipantAdded = {},
             onParticipantRemoved = {},
             onEventCreated = {},
-            modifier = Modifier.Companion,
-            padding = PaddingValues(0.dp)
+            modifier = Modifier.Companion
         )
     }
 }

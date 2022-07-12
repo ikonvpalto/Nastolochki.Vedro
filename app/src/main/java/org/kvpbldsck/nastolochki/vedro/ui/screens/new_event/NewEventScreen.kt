@@ -34,8 +34,7 @@ fun NewEventScreen(newEventViewModel: NewEventViewModel) {
             onParticipantAdded = { newEventViewModel.handleEvent(NewEventScreenEvents.ParticipantAdded(it)) },
             onParticipantRemoved = { newEventViewModel.handleEvent(NewEventScreenEvents.ParticipantRemoved(it)) },
             onEventCreated = { newEventViewModel.handleEvent(NewEventScreenEvents.EventCreated) },
-            modifier = Modifier.padding(padding),
-            padding = padding
+            modifier = Modifier.padding(padding)
         ) }
     )
 
